@@ -308,6 +308,9 @@ void compileStatement(void) { // Bai 1.2
   case KW_FOR:
     compileForSt();
     break;
+  case KW_REPEAT: // Bai 2
+    compileRepeatSt();
+    break;
     // EmptySt needs to check FOLLOW tokens
   case SB_SEMICOLON:
   case KW_END:
@@ -326,8 +329,19 @@ void compileAssignSt(void) { // Bai 1.2
   if (lookAhead->tokenType == SB_LSEL) {
     compileIndexes();
   }
+  while (lookAhead->tokenType == SB_COMMA) { // Bai 2
+    eat(SB_COMMA);
+    eat(TK_IDENT);
+    if (lookAhead->tokenType == SB_LSEL) {
+      compileIndexes();
+    }
+  }
   eat(SB_ASSIGN);
   compileExpression();
+  while (lookAhead->tokenType == SB_COMMA) { // Bai 2
+    eat(SB_COMMA);
+    compileExpression();
+  }
   assert("Assign statement parsed ....");
 }
 
@@ -383,6 +397,15 @@ void compileForSt(void) { // Bai 1.2
   eat(KW_DO);
   compileStatement();
   assert("For statement parsed ....");
+}
+
+void compileRepeatSt(void) { // Bai 2
+  assert("Parsing a repeat statement ....");
+  eat(KW_REPEAT);
+  compileStatement();
+  eat(KW_UNTIL);
+  compileCondition();
+  assert("Repeat statement parsed ....");
 }
 
 void compileArguments(void) { // Bai 1.2
