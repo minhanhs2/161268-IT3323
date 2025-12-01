@@ -81,49 +81,49 @@ void compileBlock5(void) {
   eat(KW_END);
 }
 
-void compileConstDecls(void) {
+void compileConstDecls(void) { // Bai 1.1
   if (lookAhead->tokenType == TK_IDENT) {
     compileConstDecl();
     compileConstDecls();
   }
 }
 
-void compileConstDecl(void) {
+void compileConstDecl(void) { // Bai 1.1
   eat(TK_IDENT);
   eat(SB_EQ);
   compileConstant();
   eat(SB_SEMICOLON);
 }
 
-void compileTypeDecls(void) {
+void compileTypeDecls(void) { // Bai 1.1
   if (lookAhead->tokenType == TK_IDENT) {
     compileTypeDecl();
     compileTypeDecls();
   }
 }
 
-void compileTypeDecl(void) {
+void compileTypeDecl(void) { // Bai 1.1
   eat(TK_IDENT);
   eat(SB_EQ);
   compileType();
   eat(SB_SEMICOLON);
 }
 
-void compileVarDecls(void) {
+void compileVarDecls(void) { // Bai 1.1
   if (lookAhead->tokenType == TK_IDENT) {
     compileVarDecl();
     compileVarDecls();
   }
 }
 
-void compileVarDecl(void) {
+void compileVarDecl(void) { // Bai 1.1
   eat(TK_IDENT);
   eat(SB_COLON);
   compileType();
   eat(SB_SEMICOLON);
 }
 
-void compileSubDecls(void) {
+void compileSubDecls(void) { // Bai 1.1
   assert("Parsing subtoutines ....");
   while ((lookAhead->tokenType == KW_FUNCTION) || (lookAhead->tokenType == KW_PROCEDURE)) {
     if (lookAhead->tokenType == KW_FUNCTION)
@@ -134,7 +134,7 @@ void compileSubDecls(void) {
   assert("Subtoutines parsed ....");
 }
 
-void compileFuncDecl(void) {
+void compileFuncDecl(void) { // Bai 1.1
   assert("Parsing a function ....");
   eat(KW_FUNCTION);
   eat(TK_IDENT);
@@ -147,7 +147,7 @@ void compileFuncDecl(void) {
   assert("Function parsed ....");
 }
 
-void compileProcDecl(void) {
+void compileProcDecl(void) { // Bai 1.1
   assert("Parsing a procedure ....");
   eat(KW_PROCEDURE);
   eat(TK_IDENT);
@@ -158,7 +158,7 @@ void compileProcDecl(void) {
   assert("Procedure parsed ....");
 }
 
-void compileUnsignedConstant(void) { // Bai 2
+void compileUnsignedConstant(void) { // Bai 1.2
  switch (lookAhead->tokenType) {
   case TK_NUMBER:
     eat(TK_NUMBER);
@@ -175,7 +175,7 @@ void compileUnsignedConstant(void) { // Bai 2
   }
 }
 
-void compileConstant(void) {
+void compileConstant(void) { // Bai 1.1
   switch (lookAhead->tokenType) {
   case SB_PLUS:
     eat(SB_PLUS);
@@ -194,7 +194,7 @@ void compileConstant(void) {
   }
 }
 
-void compileConstant2(void) {
+void compileConstant2(void) { // Bai 1.1
   switch (lookAhead->tokenType) {
   case TK_IDENT:
     eat(TK_IDENT);
@@ -208,7 +208,7 @@ void compileConstant2(void) {
   }
 }
 
-void compileType(void) {
+void compileType(void) { // Bai 1.1
   switch (lookAhead->tokenType) {
   case KW_INTEGER:
     eat(KW_INTEGER);
@@ -233,7 +233,7 @@ void compileType(void) {
   }
 }
 
-void compileBasicType(void) {
+void compileBasicType(void) { // Bai 1.1
   if (lookAhead->tokenType == KW_INTEGER) {
     eat(KW_INTEGER);
   } else if (lookAhead->tokenType == KW_CHAR) {
@@ -243,7 +243,7 @@ void compileBasicType(void) {
   }
 }
 
-void compileParams(void) {
+void compileParams(void) { // Bai 1.1
   if (lookAhead->tokenType == SB_LPAR) {
     eat(SB_LPAR);
     compileParam();
@@ -252,7 +252,7 @@ void compileParams(void) {
   }
 }
 
-void compileParams2(void) {
+void compileParams2(void) { // Bai 1.1
   if (lookAhead->tokenType == SB_SEMICOLON) {
     eat(SB_SEMICOLON);
     compileParam();
@@ -260,7 +260,7 @@ void compileParams2(void) {
   }
 }
 
-void compileParam(void) {
+void compileParam(void) { // Bai 1.1
   if (lookAhead->tokenType == TK_IDENT) {
     eat(TK_IDENT);
     eat(SB_COLON);
@@ -275,12 +275,12 @@ void compileParam(void) {
   }
 }
 
-void compileStatements(void) {
+void compileStatements(void) { // Bai 1.2
   compileStatement();
   compileStatements2();
 }
 
-void compileStatements2(void) { // Bai 2
+void compileStatements2(void) { // Bai 1.2
   if (lookAhead->tokenType == SB_SEMICOLON) {
     eat(SB_SEMICOLON);
     compileStatement();
@@ -288,7 +288,7 @@ void compileStatements2(void) { // Bai 2
   }
 }
 
-void compileStatement(void) { // Bai 2
+void compileStatement(void) { // Bai 1.2
   switch (lookAhead->tokenType) {
   case TK_IDENT:
     compileAssignSt();
@@ -320,7 +320,7 @@ void compileStatement(void) { // Bai 2
   }
 }
 
-void compileAssignSt(void) { // Bai 2
+void compileAssignSt(void) { // Bai 1.2
   assert("Parsing an assign statement ....");
   eat(TK_IDENT);
   if (lookAhead->tokenType == SB_LSEL) {
@@ -331,7 +331,7 @@ void compileAssignSt(void) { // Bai 2
   assert("Assign statement parsed ....");
 }
 
-void compileCallSt(void) { // Bai 2
+void compileCallSt(void) { // Bai 1.2
   assert("Parsing a call statement ....");
   eat(KW_CALL);
   eat(TK_IDENT);
@@ -339,7 +339,7 @@ void compileCallSt(void) { // Bai 2
   assert("Call statement parsed ....");
 }
 
-void compileGroupSt(void) { // Bai 2
+void compileGroupSt(void) { // Bai 1.2
   assert("Parsing a group statement ....");
   eat(KW_BEGIN);
   compileStatements();
@@ -347,7 +347,7 @@ void compileGroupSt(void) { // Bai 2
   assert("Group statement parsed ....");
 }
 
-void compileIfSt(void) {
+void compileIfSt(void) { // Bai 1.2
   assert("Parsing an if statement ....");
   eat(KW_IF);
   compileCondition();
@@ -358,12 +358,12 @@ void compileIfSt(void) {
   assert("If statement parsed ....");
 }
 
-void compileElseSt(void) {
+void compileElseSt(void) { // Bai 1.2
   eat(KW_ELSE);
   compileStatement();
 }
 
-void compileWhileSt(void) { // Bai 2
+void compileWhileSt(void) { // Bai 1.2
   assert("Parsing a while statement ....");
   eat(KW_WHILE);
   compileCondition();
@@ -372,7 +372,7 @@ void compileWhileSt(void) { // Bai 2
   assert("While statement pased ....");
 }
 
-void compileForSt(void) { // Bai 2
+void compileForSt(void) { // Bai 1.2
   assert("Parsing a for statement ....");
   eat(KW_FOR);
   eat(TK_IDENT);
@@ -385,7 +385,7 @@ void compileForSt(void) { // Bai 2
   assert("For statement parsed ....");
 }
 
-void compileArguments(void) { // Bai 2
+void compileArguments(void) { // Bai 1.2
   if (lookAhead->tokenType == SB_LPAR) {
     eat(SB_LPAR);
     compileExpression();
@@ -394,7 +394,7 @@ void compileArguments(void) { // Bai 2
   }
 }
 
-void compileArguments2(void) { // Bai 2
+void compileArguments2(void) { // Bai 1.2
   if (lookAhead->tokenType == SB_COMMA) {
     eat(SB_COMMA);
     compileExpression();
@@ -402,12 +402,12 @@ void compileArguments2(void) { // Bai 2
   }
 }
 
-void compileCondition(void) { // Bai 2
+void compileCondition(void) { // Bai 1.2
   compileExpression();
   compileCondition2();
 }
 
-void compileCondition2(void) { // Bai 2
+void compileCondition2(void) { // Bai 1.2
   switch (lookAhead->tokenType) {
   case SB_EQ:
     eat(SB_EQ);
@@ -438,7 +438,7 @@ void compileCondition2(void) { // Bai 2
   }
 }
 
-void compileExpression(void) { // Bai 2
+void compileExpression(void) { // Bai 1.2
   assert("Parsing an expression");
   switch (lookAhead->tokenType) {
   case SB_PLUS:
@@ -456,13 +456,13 @@ void compileExpression(void) { // Bai 2
   assert("Expression parsed");
 }
 
-void compileExpression2(void) { // Bai 2
+void compileExpression2(void) { // Bai 1.2
   compileTerm();
   compileExpression3();
 }
 
 
-void compileExpression3(void) { // Bai 2
+void compileExpression3(void) { // Bai 1.2
   switch (lookAhead->tokenType) {
   case SB_PLUS:
     eat(SB_PLUS);
@@ -479,12 +479,12 @@ void compileExpression3(void) { // Bai 2
   }
 }
 
-void compileTerm(void) { // Bai 2
+void compileTerm(void) { // Bai 1.2
   compileFactor();
   compileTerm2();
 }
 
-void compileTerm2(void) { // Bai 2
+void compileTerm2(void) { // Bai 1.2
   switch (lookAhead->tokenType) {
   case SB_TIMES:
     eat(SB_TIMES);
@@ -501,7 +501,7 @@ void compileTerm2(void) { // Bai 2
   }
 }
 
-void compileFactor(void) { // Bai 2
+void compileFactor(void) { // Bai 1.2
   switch (lookAhead->tokenType) {
   case TK_NUMBER:
   case TK_CHAR:
@@ -531,7 +531,7 @@ void compileFactor(void) { // Bai 2
   }
 }
 
-void compileIndexes(void) { // Bai 2
+void compileIndexes(void) { // Bai 1.2
   if (lookAhead->tokenType == SB_LSEL) {
     eat(SB_LSEL);
     compileExpression();
