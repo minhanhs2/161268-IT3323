@@ -1,0 +1,29 @@
+Program program2;
+   Var n: Integer;
+   Var sum: Integer;
+   Var digit: Integer;
+   Var temp: Integer;
+
+Begin
+   Call ReadI(n);
+   
+   sum := 0;
+
+   While n > 0 Do
+   Begin
+      digit := n;
+      temp := 0;
+
+      While digit >= 10 Do
+      Begin
+         digit := digit - 10;
+         temp := temp + 1;
+      End;
+
+      sum := sum + digit;
+      n := temp;
+   End;
+   
+   Call WriteI(sum);
+   Call WriteLn;
+End.
